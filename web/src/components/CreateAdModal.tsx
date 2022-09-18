@@ -21,7 +21,7 @@ export function CreateAdModal() {
   const [useVoiceChannel, setUseVoiceChannel] = useState(false);
 
   useEffect(() => {
-    axios.post("http://localhost:5500/games").then((response) => setGames(response.data));
+    axios.get("http://localhost:5500/games").then((response) => setGames(response.data));
   }, []);
 
   async function handleCreateAd(event: FormEvent) {
@@ -29,11 +29,6 @@ export function CreateAdModal() {
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData);
     console.log(data);
-
-    if (!data.name) {
-      return;
-    }
-
     try {
       await axios.post(`http://localhost:5500/games/${data.game}/ads`, {
         name: data.name,
